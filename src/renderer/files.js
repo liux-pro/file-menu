@@ -3,7 +3,7 @@ import {exec} from 'child_process'
 const fs = require('fs')
 const path = require('path')
 
-// 获取目录下所有子目录，不含文件
+// 获取目录下所有子目录以及文件
 export function getDirs (parent, hint = '', depth = 1) {
   let files = fs.readdirSync(parent)
   files = files.map((file) => {
@@ -15,7 +15,7 @@ export function getDirs (parent, hint = '', depth = 1) {
       path: file,
       hint: path.join(hint, basename),
       depth,
-      type: fs.statSync(file).isDirectory() ? 'dir' : 'other'
+      type: fs.statSync(file).isDirectory() ? 'dir' : 'file'
     }
     if (obj.type === 'dir') {
       let children = getDirs(file, obj.hint, depth + 1)

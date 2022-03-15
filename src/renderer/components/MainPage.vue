@@ -1,8 +1,13 @@
 <template>
   <div>
-    <el-input
-        placeholder="输入关键字进行过滤"
-        v-model="filterText">
+    <el-input placeholder="输入关键字进行过滤" v-model="filterText" class="input-with-select">
+      <el-select v-model="type" slot="prepend" placeholder="请选择" @change="filterChange">
+        <el-option label="仅限文件夹" value="dir"></el-option>
+        <el-option label="仅限文件" value="file"></el-option>
+        <el-option label="搜索所有" value="all"></el-option>
+      </el-select>
+      <el-input-number @change="filterChange" slot="append" v-model="maxDepth" controls-position="right" :min="1"
+                       :max="20"></el-input-number>
     </el-input>
     <el-button @click="exportExcel">11111111</el-button>
     <el-tree
@@ -52,8 +57,14 @@ export default {
 
   methods: {
     filterNode (value, data) {
-      if (!value) return true
       if (data.depth > this.maxDepth) return false
+
+      // 类型
+      if (this.type !== 'all') {
+        if (this.type !== data.type) {
+          return false
+        }
+      }
       return data.hint.toLowerCase().indexOf(value.toLowerCase()) !== -1
     },
     exportExcel () {
@@ -79,12 +90,16 @@ export default {
           this.$refs.input.focus()
         }
       }, 300) /* 没显示出来就聚焦没用，所以延迟聚焦，出来之后再调用 */
+    },
+    filterChange () {
+      this.$refs.tree.filter(this.filterText)
     }
   },
 
   data () {
     return {
-      maxDepth: 9999,
+      type: 'all',
+      maxDepth: 20,
       centerDialogVisible: false,
       currentComment: '',
       filterText: '',
@@ -134,8 +149,41 @@ export default {
   height: 33px;
 }
 
-.el-icon-caret-right {
-  color: gray !important;
+.tree button {
+  opacity: 0.4;
 }
 
+.tree button:hover {
+  opacity: 1;
+}
+
+.el-tree-node__content:hover {
+  background-color: #c3d9ff;
+}
+
+/*隐藏默认小箭头*/
+.el-tree-node__expand-icon {
+  color: dodgerblue;
+}
+
+.el-input-group__prepend {
+  width: 80px;
+  background-color: white;
+
+}
+
+.el-input-group__append {
+  padding: 0;
+  background-color: white;
+}
+
+.el-input-group__append div.el-input {
+  line-height: 0;
+  font-size: 30px;
+}
+
+.el-input-number .el-input input.el-input__inner {
+  height: 36px;
+  border-style: none;
+}
 </style>
