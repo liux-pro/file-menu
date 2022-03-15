@@ -8,19 +8,20 @@ export function getDirs (parent, hint = '', depth = 1) {
   let files = fs.readdirSync(parent)
   files = files.map((file) => {
     return path.join(parent, file)
-  }).filter((file) => {
-    return fs.statSync(file).isDirectory()
   }).map(file => {
     let basename = path.basename(file)
     let obj = {
       label: basename,
       path: file,
       hint: path.join(hint, basename),
-      depth
+      depth,
+      type: fs.statSync(file).isDirectory() ? 'dir' : 'other'
     }
-    let children = getDirs(file, obj.hint, depth + 1)
-    if (children.length > 0) {
-      obj.children = children
+    if (obj.type === 'dir') {
+      let children = getDirs(file, obj.hint, depth + 1)
+      if (children.length > 0) {
+        obj.children = children
+      }
     }
     return obj
   })

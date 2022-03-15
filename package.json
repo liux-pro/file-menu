@@ -56,6 +56,7 @@
   },
   "dependencies": {
     "element-ui": "^2.15.6",
+    "vue": "^2.5.16",
     "xlsx": "^0.18.3"
   },
   "devDependencies": {
@@ -97,7 +98,6 @@
     "node-loader": "^0.6.0",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
-    "vue": "^2.5.16",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^15.2.4",
     "vue-style-loader": "^4.1.0",

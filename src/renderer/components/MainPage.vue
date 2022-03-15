@@ -63,10 +63,12 @@ export default {
       openDir(data.path)
     },
     highlight (label, key) {
-      if (label.indexOf(key) === -1) {
+      if (label.toLowerCase().indexOf(key.toLowerCase()) === -1) {
         return `${label}`
       } else {
-        return label.replace(key, `<span>${key}</span>`)
+        return label.replace(new RegExp(`(${key})`, 'ig'), (word) => {
+          return `<span>${word}</span>`
+        })
       }
     },
     showInput () {
@@ -86,7 +88,7 @@ export default {
       centerDialogVisible: false,
       currentComment: '',
       filterText: '',
-      data: getDirs('E:\\Games\\黑岩2020单机1.6客户端1'),
+      data: getDirs('D:\\VC6 链接器\\VC6linker'),
       defaultProps: {
         children: 'children',
         label: 'label'
@@ -130,6 +132,10 @@ export default {
 
 .el-tree .el-tree-node__content {
   height: 33px;
+}
+
+.el-icon-caret-right {
+  color: gray !important;
 }
 
 </style>
