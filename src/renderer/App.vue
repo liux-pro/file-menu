@@ -1,20 +1,23 @@
 <template>
   <div id="app">
-    <landing-page></landing-page>
+    <main-page></main-page>
   </div>
 </template>
 
 <script>
-  import LandingPage from '@/components/LandingPage'
+  import MainPage from '@/components/MainPage'
 
   export default {
     name: 'file-menu',
     components: {
-      LandingPage
+      MainPage
     }
   }
 </script>
 
 <style>
+  .el-tree{
+    color: black;
+  }
   /* CSS */
 </style>
