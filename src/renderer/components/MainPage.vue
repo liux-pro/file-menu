@@ -8,8 +8,8 @@
       </el-select>
       <el-input-number @change="filterChange" slot="append" v-model="maxDepth" controls-position="right" :min="1"
                        :max="20"></el-input-number>
+      <el-button @click="exportExcel" slot="append"></el-button>
     </el-input>
-    <el-button @click="exportExcel">11111111</el-button>
     <el-tree
         class="filter-tree"
         :data="data"
@@ -136,6 +136,7 @@ export default {
   mounted () {
     this.data = getDirs('D:\\VC6 链接器\\VC6linker')
     window.data = this.data
+    document.querySelector('#loading').remove()
   }
 }
 </script>
