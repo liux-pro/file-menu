@@ -72,7 +72,7 @@ export default {
           return false
         }
       }
-      return (data.hint.toLowerCase().indexOf(value.toLowerCase()) !== -1) ||
+      return (data.label.toLowerCase().indexOf(value.toLowerCase()) !== -1) ||
           (data.comment && data.comment.toLowerCase().indexOf(value.toLowerCase()) !== -1)
     },
     exportExcel () {

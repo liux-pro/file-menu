@@ -32,7 +32,7 @@ export function saveExcel (aoa) {
 }
 
 export function nodeToCell (node) {
-  buildCell(node)
+  buildCell(node.label, node.path)
 }
 
 export function convert (data) {
