@@ -9,7 +9,7 @@
       <el-input-number @change="filterChange" slot="append" v-model="maxDepth" controls-position="right" :min="1"
                        :max="20"></el-input-number>
     </el-input>
-<!--    <el-button @click="exportExcel" slot="append"></el-button>-->
+    <!--    <el-button @click="exportExcel" slot="append"></el-button>-->
     <el-tree
         class="filter-tree"
         :data="data"
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import {getDirs, openDir} from '../files'
+import {getDirs, openDir, selectDir} from '../files'
 
 export default {
   name: 'MainPage',
@@ -124,6 +124,7 @@ export default {
 
   data () {
     return {
+      path: '',
       temp: null,
       type: 'all',
       maxDepth: 20,
@@ -138,7 +139,9 @@ export default {
     }
   },
   mounted () {
-    this.data = getDirs('D:\\VC6 链接器\\VC6linker')
+    this.path = selectDir()
+    console.log(this.path)
+    this.data = getDirs(this.path)
     window.data = this.data
     document.querySelector('#loading').remove()
   }

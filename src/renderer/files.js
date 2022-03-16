@@ -1,5 +1,7 @@
 import {exec} from 'child_process'
 
+const dialog = require('electron').remote.dialog
+
 const fs = require('fs')
 const path = require('path')
 
@@ -32,4 +34,10 @@ export function openDir (path) {
   // 上边的方法太慢，会有一秒多的延迟
   // exec(`explorer.exe /select,"${path}"`)
   exec(`start "" "${path}"`)
+}
+
+export function selectDir () {
+  return dialog.showOpenDialog({
+    properties: ['openDirectory']
+  })[0]
 }
