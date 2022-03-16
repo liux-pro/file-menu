@@ -1,13 +1,41 @@
 const XLSX = require('xlsx')
-var data = [
-  {'姓名': '张三', '城市': 'Seattle', 'age': '12'},
-  {'姓名': 'Mike', '城市': 'Los Angeles', 'age': '22'},
-  {'姓名': 'Zach', '城市': 'New York', 'age': '33'}
-]/* 如果没有导入xlsx组件则导入 */
+const dialog = require('electron').remote.dialog
+// var data = [
+//   {'姓名': '张三', '城市': 'Seattle', 'age': '12'},
+//   {'姓名': 'Mike', '城市': 'Los Angeles', 'age': '22'},
+//   {'姓名': 'Zach', '城市': 'New York', 'age': '33'}
+// ]
+export function buildCell (text, path) {
+  let cell = {v: text, t: 's'}
+  if (path) {
+    cell.l = {
+      Target: `file:///${path}`
+    }
+  }
+  return cell
+}
 
-var ws = XLSX.utils.json_to_sheet(data)/* 新建空workbook，然后加入worksheet */
-var wb = XLSX.utils.book_new()/* 新建book */
-ws['A1'].l = {Target: 'file:///D:/kotlin-executable-jar/build/'} /* Link to /SheetJS/t.xlsx */
-console.log(ws)
-XLSX.utils.book_append_sheet(wb, ws, 'People')/* 生成xlsx文件(book,sheet数据,sheet命名) */
-XLSX.writeFile(wb, 'sheetjs.xlsx')/* 写文件(book,xlsx文件名称) */
+export function saveExcel (aoa) {
+  const ws = XLSX.utils.aoa_to_sheet(aoa)
+  const wb = XLSX.utils.book_new()
+  console.log(ws)
+  XLSX.utils.book_append_sheet(wb, ws, '文件夹')/* 生成xlsx文件(book,sheet数据,sheet命名) */
+  // XLSX.writeFile(wb, 'sheetjs.xlsx')/* 写文件(book,xlsx文件名称) */
+  const o = dialog.showSaveDialog({
+    title: 'Save file as',
+    filters: [{
+      name: 'Excel',
+      extensions: ['xlsx']
+    }]
+  })
+  XLSX.writeFile(wb, o)
+}
+
+export function nodeToCell (node) {
+  buildCell(node)
+}
+
+export function convert (data) {
+  let array = []
+  return array
+}

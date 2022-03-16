@@ -9,7 +9,7 @@
       <el-input-number @change="filterChange" slot="append" v-model="maxDepth" controls-position="right" :min="1"
                        :max="20"></el-input-number>
     </el-input>
-    <el-button @click="exportExcel" slot="append"></el-button>
+<!--    <el-button @click="exportExcel" slot="append"></el-button>-->
     <el-tree
         class="filter-tree"
         :data="data"
@@ -76,7 +76,10 @@ export default {
           (data.comment && data.comment.toLowerCase().indexOf(value.toLowerCase()) !== -1)
     },
     exportExcel () {
-      console.log(this.data)
+      // const {saveExcel, buildCell} = require('../excel')
+      // let array = []
+      // array.push([buildCell('c', 'C:\\')])
+      // saveExcel(array)
     },
     handleNodeClick (data, node, element) {
       openDir(data.path)
