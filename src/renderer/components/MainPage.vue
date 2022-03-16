@@ -21,15 +21,20 @@
         ref="tree">
       <span class="tree" slot-scope="{ node, data }">
         <span class="red" v-html="highlight(node.label,filterText)"></span>
-        <el-button type="success" plain size="large" @click.stop="showInput">
-            添加备注
+        <el-button type="success" plain size="large" @click.stop="showInput(node)" :style="{opacity:node.data.comment ? 1 : undefined}">
+            {{ node.data.comment ? node.data.comment : '' }}
+          <i v-if="!node.data.comment" class="el-icon-s-comment"></i>
         </el-button>
       </span>
     </el-tree>
     <el-dialog
         :visible.sync="centerDialogVisible"
         width="60%"
-        center>
+        center
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        :show-close="false"
+    >
       <el-input autofocus type="textarea"
                 autosize
                 v-model="currentComment"
@@ -38,7 +43,7 @@
                 ref="input"
       ></el-input>
       <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+      <el-button type="primary" @click="saveComment">确 定</el-button>
     </span>
     </el-dialog>
   </div>
@@ -82,8 +87,10 @@ export default {
         })
       }
     },
-    showInput () {
+    showInput (node) {
+      this.temp = node
       this.centerDialogVisible = true
+      this.currentComment = this.temp.data.comment
       // 即使设置了autofocus，弹窗第二次出来之后，不会自动聚焦
       setTimeout(() => {
         if (this.$refs.input) {
@@ -93,22 +100,40 @@ export default {
     },
     filterChange () {
       this.$refs.tree.filter(this.filterText)
+    },
+    saveComment () {
+      if (!this.currentComment) {
+        this.$message.error('不能为空')
+        return
+      }
+      let label = this.temp.data.label
+      this.temp.data.comment = this.currentComment
+      this.currentComment = ''
+      this.temp.data.label = ''
+      this.temp.data.label = label
+      this.temp = null
+      this.centerDialogVisible = false
     }
   },
 
   data () {
     return {
+      temp: null,
       type: 'all',
       maxDepth: 20,
       centerDialogVisible: false,
       currentComment: '',
       filterText: '',
-      data: getDirs('D:\\VC6 链接器\\VC6linker'),
+      data: [],
       defaultProps: {
         children: 'children',
         label: 'label'
       }
     }
+  },
+  mounted () {
+    this.data = getDirs('D:\\VC6 链接器\\VC6linker')
+    window.data = this.data
   }
 }
 </script>
