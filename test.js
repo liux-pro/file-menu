@@ -1,7 +1,3 @@
-import {exec} from 'child_process'
-
-const dialog = require('electron').remote.dialog
-
 const fs = require('fs')
 const path = require('path')
 
@@ -14,8 +10,7 @@ function getIntFromFilename (s) {
 }
 
 // 获取目录下所有子目录以及文件
-export function getDirs (parent, hint = '', depth = 1) {
-  console.log(depth)
+function getDirs (parent, hint = '', depth = 1) {
   let files = fs.readdirSync(parent)
   files = files.sort().sort((a, b) => {
     return getIntFromFilename(a) - getIntFromFilename(b)
@@ -41,14 +36,4 @@ export function getDirs (parent, hint = '', depth = 1) {
   return files
 }
 
-export function openDir (path) {
-  // 上边的方法太慢，会有一秒多的延迟
-  // exec(`explorer.exe /select,"${path}"`)
-  exec(`start "" "${path}"`)
-}
-
-export function selectDir () {
-  return dialog.showOpenDialog({
-    properties: ['openDirectory']
-  })[0]
-}
+console.log(getDirs('E:\\Game'))

@@ -32,7 +32,16 @@ export function saveExcel (aoa) {
 }
 
 export function nodeToCell (node) {
-  buildCell(node.label, node.path)
+  let arr = []
+  // n级目录空出前边
+  for (let i = 0; i < node.depth - 1; i++) {
+    arr.push([])
+  }
+  arr.push(buildCell(node.label, node.path))
+  if (node.comment) {
+    arr.push(node.comment)
+  }
+  return arr
 }
 
 export function convert (data) {
