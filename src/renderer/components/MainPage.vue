@@ -21,9 +21,11 @@
         ref="tree">
       <span class="tree" slot-scope="{ node, data }">
         <span class="red" v-html="highlight(node.label,filterText)"></span>
-        <el-button type="success" plain size="large" @click.stop="showInput(node)" :style="{opacity:node.data.comment ? 1 : undefined}">
-            {{ node.data.comment ? node.data.comment : '' }}
+        <el-button type="success" plain size="large" @click.stop="showInput(node)"
+                   :style="{opacity:node.data.comment ? 1 : undefined}">
+
           <i v-if="!node.data.comment" class="el-icon-s-comment"></i>
+          <span class="red" v-else v-html="highlight(node.data.comment,filterText)"></span>
         </el-button>
       </span>
     </el-tree>
