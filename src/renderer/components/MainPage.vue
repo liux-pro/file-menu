@@ -10,7 +10,7 @@
                        :max="20"></el-input-number>
     </el-input>
     <el-button @click="exportExcel" slot="append">1</el-button>
-    <el-tree
+    <el-virtual-tree
         class="filter-tree"
         :data="data"
         :props="defaultProps"
@@ -18,17 +18,10 @@
         :filter-node-method="filterNode"
         :expand-on-click-node="false"
         @node-click="handleNodeClick"
+        :render-content="renderContent"
+        height="calc(100vh  - 80px)"
         ref="tree">
-      <span class="tree" slot-scope="{ node, data }">
-        <span class="red" v-html="highlight(node.label,filterText)"></span>
-        <el-button type="success" plain size="large" @click.stop="showInput(node)"
-                   :style="{opacity:node.data.comment ? 1 : undefined}">
-
-          <i v-if="!node.data.comment" class="el-icon-s-comment"></i>
-          <span class="red" v-else v-html="highlight(node.data.comment,filterText)"></span>
-        </el-button>
-      </span>
-    </el-tree>
+    </el-virtual-tree>
     <el-dialog
         :visible.sync="centerDialogVisible"
         width="60%"
@@ -53,6 +46,7 @@
 
 <script>
 import {getDirs, openDir, selectDir} from '../files'
+import ElVirtualTree from '/src/components/el-virtual-tree'
 
 export default {
   name: 'MainPage',
@@ -61,7 +55,7 @@ export default {
       this.$refs.tree.filter(val)
     }
   },
-
+  components: {ElVirtualTree},
   methods: {
     filterNode (value, data) {
       if (data.depth > this.maxDepth) return false
@@ -132,7 +126,9 @@ export default {
           }
         }
       }
+
       let that = {type: 'all'}
+
       function filterNode (value, data) {
         if (data.depth > 9999) return false
 
@@ -189,6 +185,19 @@ export default {
       this.temp.data.label = label
       this.temp = null
       this.centerDialogVisible = false
+    },
+    renderContent (h, {node, data, store}) {
+      console.log(data)
+      const highlightLabel = this.highlight(data.label, this.filterText)
+      const highlightComment = data.comment ? this.highlight(data.comment, this.filterText) : 'comment'
+      return (
+        <span class="tree">
+          <span class="red" domPropsInnerHTML={highlightLabel}></span>
+          <el-button type="success" plain size="large">
+            <i class="el-icon-s-comment"></i>
+            <span class="red" domPropsInnerHTML={highlightComment}></span>
+          </el-button>
+        </span>)
     }
   },
 
