@@ -195,16 +195,15 @@ export default {
       this.centerDialogVisible = false
     },
     renderContent (h, {node, data, store}) {
-      console.log(data)
       const highlightLabel = this.highlight(data.label, this.filterText)
       const highlightComment = data.comment ? this.highlight(data.comment, this.filterText) : 'comment'
       return (
         <span class="tree">
-          <span class="red" domPropsInnerHTML={highlightLabel}></span>
-          <el-button type="success" plain size="large">
-            <i class="el-icon-s-comment"></i>
-            <span class="red" domPropsInnerHTML={highlightComment}></span>
-          </el-button>
+          <span class="red" domPropsInnerHTML={highlightLabel}/>
+          <button class="el-button el-button--default">
+            <i class="el-icon-s-comment"/>
+            <span class="red" domPropsInnerHTML={highlightComment}/>
+          </button>
         </span>)
     }
   },
