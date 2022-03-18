@@ -17,7 +17,6 @@
         default-expand-all
         :filter-node-method="filterNode"
         :expand-on-click-node="false"
-        @node-click="handleNodeClick"
         :render-content="renderContent"
         height="calc(100vh  - 80px)"
         ref="tree">
@@ -95,6 +94,7 @@ export default {
       e.saveExcel(array)
     },
     handleNodeClick (data, node, element) {
+      console.log(data)
       openDir(data.path)
     },
     highlight (label, key) {
@@ -140,8 +140,12 @@ export default {
         event.stopPropagation()
         this.showInput(node)
       }
+      const handleNodeClick = () => {
+        event.stopPropagation()
+        this.handleNodeClick(data)
+      }
       return (
-        <span class="tree">
+        <span class="tree" onClick={handleNodeClick}>
           <span class="red" domPropsInnerHTML={highlightLabel}/>
           <button class="el-button el-button--default" onClick={showInput}>
             <span class="red" domPropsInnerHTML={highlightComment}/>
