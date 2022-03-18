@@ -297,4 +297,8 @@ export default {
   height: 36px;
   border-style: none;
 }
+
+/*.el-tree.filter-tree>div{*/
+/*  height: calc(100vh - 80px) !important;*/
+/*}*/
 </style>
