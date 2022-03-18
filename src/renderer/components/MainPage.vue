@@ -1,15 +1,19 @@
 <template>
   <div>
-    <el-input placeholder="输入关键字进行过滤" v-model="filterText" class="input-with-select">
-      <el-select v-model="type" slot="prepend" placeholder="请选择" @change="filterChange">
-        <el-option label="仅限文件夹" value="dir"></el-option>
-        <el-option label="仅限文件" value="file"></el-option>
-        <el-option label="搜索所有" value="all"></el-option>
-      </el-select>
-      <el-input-number @change="filterChange" slot="append" v-model="maxDepth" controls-position="right" :min="1"
-                       :max="20"></el-input-number>
-    </el-input>
-    <el-button @click="exportExcel" slot="append">1</el-button>
+    <div style="display: flex;justify-content: space-around">
+      <div id="search">
+        <el-input placeholder="输入关键字进行过滤" v-model="filterText" class="input-with-select">
+          <el-select v-model="type" slot="prepend" placeholder="请选择" @change="filterChange">
+            <el-option label="仅限文件夹" value="dir"></el-option>
+            <el-option label="仅限文件" value="file"></el-option>
+            <el-option label="搜索所有" value="all"></el-option>
+          </el-select>
+          <el-input-number @change="filterChange" slot="append" v-model="maxDepth" controls-position="right" :min="1"
+                           :max="20"></el-input-number>
+        </el-input>
+      </div>
+      <el-button @click="exportExcel" slot="append">导出</el-button>
+    </div>
     <el-virtual-tree
         class="filter-tree"
         :data="data"
@@ -18,7 +22,7 @@
         :filter-node-method="filterNode"
         :expand-on-click-node="false"
         :render-content="renderContent"
-        height="calc(100vh  - 80px)"
+        height="calc(100vh  - 40px)"
         ref="tree">
     </el-virtual-tree>
     <el-dialog
@@ -252,5 +256,8 @@ export default {
 .el-input-number .el-input input.el-input__inner {
   height: 36px;
   border-style: none;
+}
+#search {
+  width: 90%;
 }
 </style>
