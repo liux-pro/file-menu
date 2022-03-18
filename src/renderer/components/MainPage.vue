@@ -196,12 +196,15 @@ export default {
     },
     renderContent (h, {node, data, store}) {
       const highlightLabel = this.highlight(data.label, this.filterText)
-      const highlightComment = data.comment ? this.highlight(data.comment, this.filterText) : 'comment'
+      const highlightComment = data.comment ? this.highlight(data.comment, this.filterText) : "<i class='el-icon-s-comment' style='opacity: 0.4'></i>"
+      const showInput = () => {
+        event.stopPropagation()
+        this.showInput(node)
+      }
       return (
         <span class="tree">
           <span class="red" domPropsInnerHTML={highlightLabel}/>
-          <button class="el-button el-button--default">
-            <i class="el-icon-s-comment"/>
+          <button class="el-button el-button--default" onClick={showInput}>
             <span class="red" domPropsInnerHTML={highlightComment}/>
           </button>
         </span>)
@@ -270,12 +273,12 @@ export default {
   height: 33px;
 }
 
-.tree button {
-  opacity: 0.4;
-}
+/*.tree button {*/
+/*  opacity: 0.4;*/
+/*}*/
 
-.tree button:hover {
-  opacity: 1;
+.tree i:hover {
+  opacity: 1 !important;
 }
 
 .el-tree-node__content:hover {
