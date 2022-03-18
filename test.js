@@ -38,6 +38,18 @@ function getDirs (parent, hint = '', depth = 1) {
 
 let count = 0
 let valid = 0
+function filterNode (value, data) {
+  if (data.depth > 9999) return false
+
+  // 类型
+  if (that.type !== 'all') {
+    if (that.type !== data.type) {
+      return false
+    }
+  }
+  return (data.label.toLowerCase().indexOf(value.toLowerCase()) !== -1) ||
+    (data.comment && data.comment.toLowerCase().indexOf(value.toLowerCase()) !== -1)
+}
 
 function showNode (data) {
   for (let i = 0; i < data.length; i++) {
@@ -52,18 +64,6 @@ function showNode (data) {
   }
 }
 let that = {type: 'all'}
-function filterNode (value, data) {
-  if (data.depth > 9999) return false
-
-  // 类型
-  if (that.type !== 'all') {
-    if (that.type !== data.type) {
-      return false
-    }
-  }
-  return (data.label.toLowerCase().indexOf(value.toLowerCase()) !== -1) ||
-    (data.comment && data.comment.toLowerCase().indexOf(value.toLowerCase()) !== -1)
-}
 
 let dirs = getDirs('E:\\Games')
 showNode(dirs)

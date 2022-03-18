@@ -31,7 +31,7 @@ export function saveExcel (aoa) {
   XLSX.writeFile(wb, o)
 }
 
-export function nodeToCell (node) {
+export function nodeToRow (node) {
   let arr = []
   // n级目录空出前边
   for (let i = 0; i < node.depth - 1; i++) {
