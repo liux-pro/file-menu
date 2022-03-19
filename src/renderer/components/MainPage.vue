@@ -69,16 +69,12 @@ export default {
           return false
         }
       }
-      const show = (data.label.toLowerCase().indexOf(value.toLowerCase()) !== -1) ||
+      const show = (data.hint.toLowerCase().indexOf(value.toLowerCase()) !== -1) ||
           (data.comment && data.comment.toLowerCase().indexOf(value.toLowerCase()) !== -1)
-      if (show) {
-        const label = data.label
-        data.label = ''
-        data.label = label
-        return show
-      } else {
-        return show
-      }
+      const label = data.label
+      data.label = ''
+      data.label = label
+      return show
     },
     exportExcel () {
       const e = require('../excel')

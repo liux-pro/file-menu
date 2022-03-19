@@ -1,6 +1,6 @@
 {
   "name": "file-menu",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Legend <me@liux.pro>",
   "description": "生成文件夹目录",
   "license": null,
@@ -48,7 +48,7 @@
       "icon": "build/icons/icon.icns"
     },
     "win": {
-      "icon": "build/icons/icon.ico"
+      "icon": "static/icon.ico"
     },
     "linux": {
       "icon": "build/icons"
